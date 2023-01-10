@@ -8,6 +8,10 @@
         "array": "cpp",
         "string_view": "cpp",
         "__hash_table": "cpp",
-        "__split_buffer": "cpp"
+        "__split_buffer": "cpp",
+        "chrono": "cpp",
+        "functional": "cpp",
+        "memory": "cpp",
+        "tuple": "cpp"
     }
 }

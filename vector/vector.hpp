@@ -6,7 +6,7 @@
 /*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/10 16:33:49 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/10 16:51:16 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define VECTOR_HPP
 #include <iostream>
 #include <vector>
+#include <memory>
 
 namespace ft
 {
@@ -21,8 +22,22 @@ namespace ft
     class vector
     {
         private :
-            ///
+            T *V;
+            size_t size;
+            size_t capacity;
         public :
+            T value_type;
+            Alloc::Allocator Allocator_type;
+            size_t size_type;
+            std::ptrdiff difference_type;
+            value_type & reference;
+            value_type & const const_reference;
+            Alloc::pointer pointer;
+            Alloc::const_pointer const_pointer;
+            typedef typename iterator std::vector::iterator;
+            typedef typename const_iterator std::vector::const_iterator;
+            typedef typename reverse_iterator std::reverse_iterator;
+            typedef typename const_reverse_iterator std::vector::const_iterator;
             vector();
             ~vector();
             vector & operator=(vector & const V);
