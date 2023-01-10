@@ -6,7 +6,7 @@
 /*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/08 21:20:38 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/10 16:33:49 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 namespace ft
 {
-    template<class T, class Allocator = std::allocator<T>>
+    template<class T, class Alloc = std::allocator<T>>
     class vector
     {
         private :
@@ -51,9 +51,18 @@ namespace ft
             void pop_back();
             void resize( size_type count );
             void resize( size_type count, T value = T() );
-            void swap( vector& other );
-
+            void swap( vector & other );
+            void swap(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2); // std::swap
+            bool   operator>=(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
+            bool   operator==(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
+            bool   operator<=(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
+            bool   operator!=(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
+            bool   operator>(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
+            bool   operator<(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
+            
     };
+  
+    
 };
 
 #endif
