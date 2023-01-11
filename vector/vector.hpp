@@ -6,13 +6,12 @@
 /*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/10 20:51:00 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/11 19:15:55 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
-#include <vector>
 #include <vector>
 #include <iostream>
 #include <memory>
@@ -24,13 +23,19 @@ namespace ft
     {
         public :
             typedef T value_type;
-            typedef  Alloc allocator_type;
+            typedef  Alloc  allocator_type;
             typedef typename allocator_type::reference reference;
             typedef typename allocator_type::const_reference const_reference;
             typedef typename allocator_type::pointer pointer;
             typedef typename allocator_type::const_pointer const_pointer;
             typedef size_t size_type;
             typedef typename std::vector<T>::iterator iterator;
+        private :
+            pointer V;
+            size_type size;
+            size_type capacity;
+            allocator_type alloc;
+        public:
             explicit vector (const allocator_type& alloc = allocator_type())
             {
                 std::cout << "Vector Default Constructor Called\n";
@@ -38,16 +43,30 @@ namespace ft
                 this->size = 0;
                 this->capacity = 0;
             }
-            vector(size_type n)
-            {
+            explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())            {
                 std::cout << "Vector Paramitarized Constructor Called\n";
-                V = alloc.allocate(n);
+                this->alloc = alloc;
+                V = this->alloc.allocate(n);
                 for(int i = 0; i < n; i++)
-                    V[i] = n;
+                    this->alloc.construct(&V[i], val);
                 this->size = n;
                 this->capacity = n;
             }
-            
+            //
+            // template <class InputIterator>
+            // vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
+            // {
+            //     V = Alloc::allocate(5);
+                                
+            //     std::cout << "ffffff\n";
+            //     for(int i = 0; first != last; i++)
+            //     {
+            //         this->V[i] = *first;
+            //         first++;
+            //     }
+            //     exit(0);
+            // }
+            //
             ~vector()
             {
                 for(int i = 0; i < this->size; i++)
@@ -55,14 +74,14 @@ namespace ft
                 std::cout << "Vector Distructor Called\n";
             }
             // vector & operator=(vector & const V);
-            void assign(size_type count, const T& value );
-            allocator_type get_allocator();
-            reference at( size_type pos );
-            reference back();
-            T* data();
-            iterator begin();
+            // void assign(size_type count, const T& value );
+            // allocator_type get_allocator();
+            // reference at( size_type pos );
+            // reference back();
+            // T* data();
+            // iterator begin();
             // const_iterator begin() const;
-            iterator end();
+            // iterator end();
             // const_iterator end() const;
             // reverse_iterator rbegin();
             // const_reverse_iterator rbegin() const;
@@ -89,11 +108,7 @@ namespace ft
             // bool   operator>(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
             // bool   operator<(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
             
-        private :
-            pointer V;
-            size_type size;
-            size_type capacity;
-            allocator_type alloc;
+        
     };
   
 };

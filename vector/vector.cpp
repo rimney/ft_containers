@@ -6,7 +6,7 @@
 /*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 19:13:59 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/10 20:50:54 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/11 19:16:26 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int main()
 {
-    ft::vector<int> A(5);
-
+    ft::vector<int> A(5, 20);
+    // for (int i = 0; i < A.size(); ++i)
+    //   A[i] = i + 1;
+    // // ft::vector<int> B(A.begin(), A.end());
 }
