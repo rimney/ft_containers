@@ -6,7 +6,7 @@
 /*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/11 19:15:55 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/12 00:10:29 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ namespace ft
             typedef typename std::vector<T>::iterator iterator;
         private :
             pointer V;
-            size_type size;
+            size_type _size;
             size_type capacity;
             allocator_type alloc;
         public:
@@ -40,16 +40,17 @@ namespace ft
             {
                 std::cout << "Vector Default Constructor Called\n";
                 V = NULL;
-                this->size = 0;
+                this->_size = 0;
                 this->capacity = 0;
+                this->alloc = alloc;
             }
             explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())            {
                 std::cout << "Vector Paramitarized Constructor Called\n";
                 this->alloc = alloc;
                 V = this->alloc.allocate(n);
-                for(int i = 0; i < n; i++)
+                for(int i = 0; (size_t)i < n; i++)
                     this->alloc.construct(&V[i], val);
-                this->size = n;
+                this->_size = n;
                 this->capacity = n;
             }
             //
@@ -67,11 +68,17 @@ namespace ft
             //     exit(0);
             // }
             //
+            
             ~vector()
             {
-                for(int i = 0; i < this->size; i++)
-                    std::cout << V[i] << '\n';
                 std::cout << "Vector Distructor Called\n";
+            }
+            T & operator[](size_type index)
+            {
+                // if(index > this->_size | (int)index < 0)
+                //     return (0);
+                return (this->V[index]);
+                
             }
             // vector & operator=(vector & const V);
             // void assign(size_type count, const T& value );
@@ -88,7 +95,10 @@ namespace ft
             // reverse_iterator rend();
             // const_reverse_iterator rend() const;
             // bool empty() const;
-            // size_type size() const;
+             size_type size() const
+             {
+                return (this->_size);
+             }
             // size_type max_size() const;
             // void reserve(size_type new_cap);
             // size_type capacity() const;
