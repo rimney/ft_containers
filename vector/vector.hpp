@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/12 00:10:29 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/12 18:00:59 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,22 @@ namespace ft
             //     exit(0);
             // }
             //
-            
+            vector(vector const &vec)
+            {
+                *this = vec;
+                std::cout << "Vector copy constructor Called\n";
+            }
+            vector & operator=(vector const  & vec)
+            {
+                this->alloc = vec.alloc;
+                this->_size = vec._size;
+                this->capacity = vec.capacity;
+                V = this->alloc.allocate(this->_size);
+                for(int i = 0; (size_t)i < this->_size;i++)
+                    this->alloc.construct(&this->V[i], vec.V[i] + i);
+                std::cout << "Vector Copy Assignment Overload Called\n";
+                return (*this);
+            }
             ~vector()
             {
                 std::cout << "Vector Distructor Called\n";
@@ -80,10 +95,17 @@ namespace ft
                 return (this->V[index]);
                 
             }
-            // vector & operator=(vector & const V);
             // void assign(size_type count, const T& value );
-            // allocator_type get_allocator();
-            // reference at( size_type pos );
+            allocator_type get_allocator() const
+            {
+                return (this->alloc);
+            }
+            reference at( size_type pos )
+            {
+                if(pos >= this->_size)
+                    throw("access error");
+                return (this->V[pos]);
+            }
             // reference back();
             // T* data();
             // iterator begin();

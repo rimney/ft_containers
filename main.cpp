@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 19:13:59 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/12 00:05:16 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/13 12:58:03 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,16 @@
 int main()
 {
     ft::vector <int> B(5, 10);
-    for(int i = 0; (size_t)i < B.size(); i++)
+    ft::vector <int> C = B;
+    ft::vector<int> t = B.begin();
+    
+        
+    for(int i = 0; (size_t)i < C.size(); i++)
     {
-        std::cout << B[i] << std::endl;
+        std::cout << C[i] << std::endl;
     }
-    // system("leaks a.out");
+    std::cout << C.at(1) << '\n';
+    system("leaks containers"); 
     // ft::vector<int> A(B.begin(), B.end());
     // for (int i = 0; i < A.size(); ++i)
     //   A[i] = i + 1;
