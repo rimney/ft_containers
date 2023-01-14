@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 19:13:59 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/13 12:58:03 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/13 23:27:08 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int main()
 {
     ft::vector <int> B(5, 10);
     ft::vector <int> C = B;
-    ft::vector<int> t = B.begin();
+    ft::vector<int>::iterator I = B.begin();
     
         
     for(int i = 0; (size_t)i < C.size(); i++)
