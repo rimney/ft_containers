@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:02:44 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/14 21:12:30 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/15 00:33:06 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ namespace ft
             typedef typename ft::iterator<std::random_access_iterator_tag, T>::Reference reference;
             randomAccessIterator() : _pointer(NULL){}
             randomAccessIterator(const pointer ptr) : _pointer(ptr) {}
+            operator randomAccessIterator<const T> () const{
+            return randomAccessIterator<const T>(_pointer);
+            }
             randomAccessIterator(randomAccessIterator & R)
             {
-                this->_pointer = R.pointer;
+                this->_pointer = R._pointer;
             }
             ~randomAccessIterator() {}
             bool operator==(const randomAccessIterator & r) const
@@ -82,15 +85,15 @@ namespace ft
             }
             bool operator>=(const randomAccessIterator & r) const
             {
-                return (this->_pointer >= r.pointer);
+                return (this->_pointer >= r._pointer);
             }
             bool operator<(const randomAccessIterator & r) const
             {
-                return (this->_pointer < r.pointer);
+                return (this->_pointer < r._pointer);
             }
             bool operator<=(const randomAccessIterator & r) const
             {
-                return (this->_pointer <= r.pointer);
+                return (this->_pointer <= r._pointer);
             }
             randomAccessIterator operator++()
             {

@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/14 21:13:31 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/15 00:29:20 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ namespace ft
                 std::cout << "Vector Paramitarized Constructor Called\n";
                 this->alloc = alloc;
                 V = this->alloc.allocate(n);
-                for(int i = 0; (size_t)i < n; i++)
+                for(size_type i = 0; i < n; i++)
                     this->alloc.construct(&V[i], val);
                 this->_size = n;
                 this->capacity = n;
@@ -82,7 +82,7 @@ namespace ft
                 this->_size = vec._size;
                 this->capacity = vec.capacity;
                 V = this->alloc.allocate(this->_size);
-                for(int i = 0; (size_t)i < this->_size;i++)
+                for(size_t i = 0; (size_t)i < this->_size;i++)
                     this->alloc.construct(&this->V[i], vec.V[i] + i);
                 std::cout << "Vector Copy Assignment Overload Called\n";
                 return (*this);
@@ -113,7 +113,7 @@ namespace ft
             // T* data();
              iterator begin()
              {
-                return (iterator(this->V[0]));
+                return (iterator(V));
              }
             // const_iterator begin() const;
             // iterator end()
