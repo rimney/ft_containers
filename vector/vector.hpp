@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/12 18:00:59 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/14 21:13:31 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <vector>
 #include <iostream>
 #include <memory>
+#include "../iterators/randomAccessIterator.hpp"
 
 namespace ft
 {
@@ -29,7 +30,9 @@ namespace ft
             typedef typename allocator_type::pointer pointer;
             typedef typename allocator_type::const_pointer const_pointer;
             typedef size_t size_type;
-            typedef typename std::vector<T>::iterator iterator;
+            typedef randomAccessIterator<value_type> iterator;
+            typedef randomAccessIterator<const value_type> const_iterator;
+            
         private :
             pointer V;
             size_type _size;
@@ -108,9 +111,15 @@ namespace ft
             }
             // reference back();
             // T* data();
-            // iterator begin();
+             iterator begin()
+             {
+                return (iterator(this->V[0]));
+             }
             // const_iterator begin() const;
-            // iterator end();
+            // iterator end()
+            // {
+            //     return (this->V[size - 1]);
+            // }
             // const_iterator end() const;
             // reverse_iterator rbegin();
             // const_reverse_iterator rbegin() const;

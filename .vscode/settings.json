@@ -61,6 +61,27 @@
         "type_traits": "cpp",
         "typeinfo": "cpp",
         "utility": "cpp",
-        "__functional_03": "cpp"
+        "__functional_03": "cpp",
+        "deque": "cpp",
+        "thread": "cpp",
+        "__bits": "cpp",
+        "cfenv": "cpp",
+        "clocale": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "condition_variable": "cpp",
+        "iomanip": "cpp",
+        "numbers": "cpp",
+        "numeric": "cpp",
+        "queue": "cpp",
+        "random": "cpp",
+        "semaphore": "cpp",
+        "strstream": "cpp",
+        "valarray": "cpp",
+        "variant": "cpp",
+        "*.tcc": "cpp",
+        "source_location": "cpp",
+        "stop_token": "cpp",
+        "cinttypes": "cpp"
     }
 }
