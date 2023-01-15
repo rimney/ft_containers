@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/15 13:12:50 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/15 13:21:30 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ namespace ft
             // T* data();
              iterator begin()
              {
-                return (iterator(V[0]));
+                return (iterator(V));
              }
             // const_iterator begin() const;
             // iterator end()

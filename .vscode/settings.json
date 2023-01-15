@@ -82,6 +82,7 @@
         "*.tcc": "cpp",
         "source_location": "cpp",
         "stop_token": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "version": "cpp"
     }
 }
