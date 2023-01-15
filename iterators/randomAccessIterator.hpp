@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:02:44 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/15 14:26:26 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/15 17:14:07 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ namespace ft
             }
             reference operator[](difference_type index) const
             {
-                return (this->_pointer[index]);
+                return (_pointer[index]);
             }
             bool operator>(const randomAccessIterator & r) const
             {
-                return (this->_pointer > r.pointer);
+                return (this->_pointer > r._pointer);
             }
             bool operator>=(const randomAccessIterator & r) const
             {
@@ -111,8 +111,8 @@ namespace ft
             }
             randomAccessIterator operator--(int)
             {
-                --this->_pointer;
-                return (*this);
+                return(--this->_pointer);
+                
             }
             randomAccessIterator operator+(difference_type diff)
             {

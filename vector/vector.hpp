@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/15 14:20:49 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/15 17:17:02 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ namespace ft
                 this->alloc = alloc;
                 V = this->alloc.allocate(n);
                 for(size_type i = 0; i < n; i++)
-                    this->alloc.construct(&V[i], val);
+                {
+                    
+                    this->alloc.construct(&V[i], val + i);
+                }
                 this->_size = n;
                 this->capacity = n;
             }
@@ -84,7 +87,7 @@ namespace ft
                 this->capacity = vec.capacity;
                 V = this->alloc.allocate(this->_size);
                 for(size_t i = 0; (size_t)i < this->_size;i++)
-                    this->alloc.construct(&this->V[i], vec.V[i] + i);
+                    this->alloc.construct(&this->V[i], vec.V[i]);
                 std::cout << "Vector Copy Assignment Overload Called\n";
                 return (*this);
             }
@@ -108,7 +111,7 @@ namespace ft
             {
                 if(pos >= this->_size)
                     throw("access error");
-                return (this->V[pos]);
+                return (V[pos]);
             }
             // reference back();
             // T* data();
@@ -117,10 +120,10 @@ namespace ft
                 return (iterator(V));
              }
             // const_iterator begin() const;
-            // iterator end()
-            // {
-            //     return (this->V[size - 1]);
-            // }
+            iterator end()
+            {
+                return (iterator(V + _size - 1));
+            }
             // const_iterator end() const;
             // reverse_iterator rbegin();
             // const_reverse_iterator rbegin() const;

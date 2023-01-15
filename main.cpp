@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 19:13:59 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/15 14:27:06 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/15 17:16:31 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,10 @@
 
 int main()
 {
-    ft::vector <int> B(5, 10);
-    ft::vector <int> C = B;
-    // ft::vector<int>::iterator I = B.begin();
-    ft::vector<int>::iterator i = B.begin();
-    std::cout << *i  << std::endl;
-    // exit(0);
-    for(int i = 0; (size_t)i < C.size(); i++)
+    ft::vector<int> A(10, 1);
+    for(ft::vector<int>::iterator i = A.end();i >= A.begin(); i--)
     {
-        std::cout << C[i] << std::endl;
+        // std::cout << i[index] << "<<<< \n"; ?? 
+        std::cout << *i << "<< \n";
     }
-    std::cout << C.at(1) << '\n';
-    // system("leaks containers"); 
-    // ft::vector<int> A(B.begin(), B.end());
-    // for (int i = 0; i < A.size(); ++i)
-    //   A[i] = i + 1;
-    // // ft::vector<int> B(A.begin(), A.end());
 }
