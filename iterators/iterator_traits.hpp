@@ -6,12 +6,12 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 12:06:07 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/14 21:01:01 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/15 13:00:05 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITERATOR_TREATS_HPP
-# define ITERATOR_TREATS_HPP
+#ifndef ITERATOR_TRAITS_HPP
+# define ITERATOR_TRAITS_HPP
 
 namespace ft
 {

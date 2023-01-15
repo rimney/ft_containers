@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/15 00:29:20 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/15 13:12:50 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <iostream>
 #include <memory>
 #include "../iterators/randomAccessIterator.hpp"
+#include "../iterators/iterator_traits.hpp"
 
 namespace ft
 {
@@ -113,7 +114,7 @@ namespace ft
             // T* data();
              iterator begin()
              {
-                return (iterator(V));
+                return (iterator(V[0]));
              }
             // const_iterator begin() const;
             // iterator end()

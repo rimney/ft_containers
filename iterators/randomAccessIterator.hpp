@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:02:44 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/15 00:33:06 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/15 13:05:15 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,16 @@ namespace ft
     template <class T>
     class randomAccessIterator : ft::iterator<std::random_access_iterator_tag, T>
     {
-        private :
-            T *_pointer;
+
         public :
             typedef typename ft::iterator<std::random_access_iterator_tag, T>::Category iterator_category;
             typedef typename ft::iterator<std::random_access_iterator_tag, T>::value_type value_type;
             typedef typename ft::iterator<std::random_access_iterator_tag, T>::difference_type difference_type;
             typedef typename ft::iterator<std::random_access_iterator_tag, T>::Pointer pointer;
             typedef typename ft::iterator<std::random_access_iterator_tag, T>::Reference reference;
-            randomAccessIterator() : _pointer(NULL){}
-            randomAccessIterator(const pointer ptr) : _pointer(ptr) {}
-            operator randomAccessIterator<const T> () const{
+            randomAccessIterator() : _pointer(nullptr){}
+            randomAccessIterator(pointer ptr) : _pointer(ptr) {}
+            operator randomAccessIterator<T> () const{
             return randomAccessIterator<const T>(_pointer);
             }
             randomAccessIterator(randomAccessIterator & R)
@@ -50,7 +49,7 @@ namespace ft
             }
             pointer operator*() const
             {
-                return (_pointer);
+                return (*_pointer);
             }
             pointer operator->() const
             {
@@ -142,6 +141,8 @@ namespace ft
             // {
             //     return (this->pointer != temp->pointer);
             // }
+        private :
+            T *_pointer;
         };
     }
 
