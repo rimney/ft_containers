@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 11:25:25 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/15 13:26:49 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/15 14:19:27 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ namespace ft
             typedef Pointer pointer;
             typedef reference Reference;
             typedef category Category;
+            iterator() {}
+            ~iterator() {}
     };
 }
 

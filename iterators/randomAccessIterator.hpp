@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:02:44 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/15 13:35:41 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/15 14:26:26 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace ft
             operator randomAccessIterator<T> () {
             return randomAccessIterator< T>(_pointer);
             }
-            randomAccessIterator(randomAccessIterator & R)
+            randomAccessIterator  Iterator(randomAccessIterator & R)
             {
                 this->_pointer = R._pointer;
             }
@@ -47,9 +47,9 @@ namespace ft
             {
                 return (this->_pointer != r._pointer);    
             }
-            pointer operator*() const
+            reference operator*() const
             {
-                return (_pointer);
+                return (*_pointer);
             }
             pointer operator->() const
             {
