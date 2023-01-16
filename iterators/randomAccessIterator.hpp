@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:02:44 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/15 17:14:07 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/16 19:13:26 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
 namespace ft
 {
     template <class T>
-    class randomAccessIterator : ft::iterator<std::random_access_iterator_tag, T>
+    class randomAccessIterator : ft::Iterator<std::random_access_iterator_tag, T>
     {
 
         public :
-            typedef typename ft::iterator<std::random_access_iterator_tag, T>::Category iterator_category;
-            typedef typename ft::iterator<std::random_access_iterator_tag, T>::value_type value_type;
-            typedef typename ft::iterator<std::random_access_iterator_tag, T>::difference_type difference_type;
-            typedef typename ft::iterator<std::random_access_iterator_tag, T>::pointer pointer;
-            typedef typename ft::iterator<std::random_access_iterator_tag, T>::Reference reference;
+            typedef typename ft::Iterator<std::random_access_iterator_tag, T>::Category iterator_category;
+            typedef typename ft::Iterator<std::random_access_iterator_tag, T>::value_type value_type;
+            typedef typename ft::Iterator<std::random_access_iterator_tag, T>::difference_type difference_type;
+            typedef typename ft::Iterator<std::random_access_iterator_tag, T>::pointer pointer;
+            typedef typename ft::Iterator<std::random_access_iterator_tag, T>::Reference reference;
             randomAccessIterator() : _pointer(NULL){}
             randomAccessIterator(const pointer ptr) : _pointer(ptr) {}
             operator randomAccessIterator<T> () {
@@ -55,13 +55,13 @@ namespace ft
             {
                 return (this->_pointer);
             }
-            difference_type operator-(difference_type diff) const
-            {
-                return (this->_pointer - diff);
-            }
+            // difference_type operator-(difference_type diff) const
+            // {
+            //     return (this->_pointer - diff);
+            // }
             difference_type operator+(difference_type diff) const
             {
-                return (this->_pointer - diff);
+                return (this->_pointer + diff);
             }
             
             randomAccessIterator operator+=(difference_type diff)
@@ -118,10 +118,10 @@ namespace ft
             {
                 return randomAccessIterator(diff + this->_pointer);
             }
-            randomAccessIterator operator-(difference_type diff)
-            {
-                return randomAccessIterator(diff - this->_pointer);
-            }
+            // randomAccessIterator operator-(difference_type diff)
+            // {
+            //     return randomAccessIterator(diff - this->_pointer);
+            // }
             // // template <class T>
             // randomAccessIterator<T> operator+(difference_type diff)           
             // {

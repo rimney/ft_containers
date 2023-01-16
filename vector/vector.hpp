@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/15 17:17:02 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/16 19:12:41 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 #include <vector>
 #include <iostream>
 #include <memory>
+#include <iterator>
 #include "../iterators/randomAccessIterator.hpp"
 #include "../iterators/iterator_traits.hpp"
+#include "../iterators/reverse_iterator.hpp"
 
 namespace ft
 {
@@ -33,6 +35,10 @@ namespace ft
             typedef size_t size_type;
             typedef randomAccessIterator<value_type> iterator;
             typedef randomAccessIterator<const value_type> const_iterator;
+            typedef reverseIterator<iterator> reverse_iterator;
+            typedef reverseIterator<const_iterator> const_reverse_iterator;
+            typedef typename ft::IteratorTraits<iterator>::difference_type difference_type; 
+            
             
         private :
             pointer V;
@@ -61,20 +67,24 @@ namespace ft
                 this->capacity = n;
             }
             //
-            // template <class InputIterator>
-            // vector (InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type())
-            // {
-            //     V = Alloc::allocate(5);
-                                
-            //     std::cout << "ffffff\n";
-            //     for(int i = 0; first != last; i++)
-            //     {
-            //         this->V[i] = *first;
-            //         first++;
-            //     }
-            //     exit(0);
-            // }
-            //
+            template <class inputIterator>
+            explicit vector (inputIterator first, inputIterator last, const allocator_type& alloc = allocator_type(), typename std::enable_if<!std::is_integral<inputIterator>::value>::type* = 0)
+            {
+                difference_type n = std::distance(first, last);
+                this->alloc = alloc;
+                this->_size = n;
+                // exit(0);
+                V = this->alloc.allocate(_size);
+
+                for(difference_type i = 0; i < n; i++)
+                {
+                    // i++;
+                    std::cout << *first;
+  
+                    // this->alloc.construct(V + i, *first);
+                }
+            }
+            
             vector(vector const &vec)
             {
                 *this = vec;
@@ -95,12 +105,15 @@ namespace ft
             {
                 std::cout << "Vector Distructor Called\n";
             }
-            T & operator[](size_type index)
+            reference & operator[](size_type index)
             {
                 // if(index > this->_size | (int)index < 0)
                 //     return (0);
                 return (this->V[index]);
-                
+            }
+            const_reference & operator[](size_type index) const
+            {
+                return (this->V[index]);
             }
             // void assign(size_type count, const T& value );
             allocator_type get_allocator() const
@@ -124,17 +137,35 @@ namespace ft
             {
                 return (iterator(V + _size - 1));
             }
-            // const_iterator end() const;
-            // reverse_iterator rbegin();
-            // const_reverse_iterator rbegin() const;
-            // reverse_iterator rend();
-            // const_reverse_iterator rend() const;
-            // bool empty() const;
+            const_iterator end() const
+            {
+                return (const_iterator(V + _size - 1));
+            }
+            reverse_iterator rbegin()
+            {
+                return (reverse_iterator(this->V + _size));
+            }
+            const_reverse_iterator rbegin() const
+            {
+                return (const_reverse_iterator(this->V + _size));
+            }
+            reverse_iterator rend()
+            {
+                return (reverse_iterator(V));
+            }
+            const_reverse_iterator rend() const
+            {
+                return (const_reverse_iterator((V)));
+            }
+            bool empty() const
+            {
+                return (this->_size == 0 ? true : false);
+            }
              size_type size() const
              {
                 return (this->_size);
              }
-            // size_type max_size() const;
+            size_type max_size() const;
             // void reserve(size_type new_cap);
             // size_type capacity() const;
             // void clear();
