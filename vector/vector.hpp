@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
+/*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/16 19:12:41 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/16 22:50:37 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,21 @@ namespace ft
             template <class inputIterator>
             explicit vector (inputIterator first, inputIterator last, const allocator_type& alloc = allocator_type(), typename std::enable_if<!std::is_integral<inputIterator>::value>::type* = 0)
             {
-                difference_type n = std::distance(first, last);
                 this->alloc = alloc;
-                this->_size = n;
+                // this->_size = n;
                 // exit(0);
-                V = this->alloc.allocate(_size);
+                // V = this->alloc.allocate(_size);
 
-                for(difference_type i = 0; i < n; i++)
-                {
-                    // i++;
-                    std::cout << *first;
+                // for(difference_type i = 0; i < n; i++)
+                // {
+                //     // i++;
+                //     std::cout << *first;
   
-                    // this->alloc.construct(V + i, *first);
+                //     // this->alloc.construct(V + i, *first);
+                // }
+                while(first != last){
+                    // this->push_back(*first);
+                    first++;
                 }
             }
             
@@ -166,9 +169,9 @@ namespace ft
                 return (this->_size);
              }
             size_type max_size() const;
-            // void reserve(size_type new_cap);
+            // void reserve(size_type new_cap); 
             // size_type capacity() const;
-            // void clear();
+            // void clear(); // it desrtroys the objects assign size to 0 and alloc.destroy to all elements
             // iterator insert( const_iterator pos, const T& value );
             // iterator erase( iterator pos );
             // void push_back( const T& value );

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   randomAccessIterator.hpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
+/*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:02:44 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/16 19:13:26 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/16 22:47:15 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ namespace ft
             {
                 return (this->_pointer);
             }
-            // difference_type operator-(difference_type diff) const
-            // {
-            //     return (this->_pointer - diff);
-            // }
+            difference_type operator-(difference_type diff) const
+            {
+                return (this->_pointer - diff);
+            }
             difference_type operator+(difference_type diff) const
             {
                 return (this->_pointer + diff);
