@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
+/*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/17 19:27:17 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/17 22:01:00 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,16 @@ namespace ft
                 this->_capacity = n;
             }
             //
-            // template <class inputIterator>
-            // explicit vector (inputIterator first, inputIterator last, const allocator_type& alloc = allocator_type(), typename std::enable_if<!std::is_integral<inputIterator>::value>::type* = 0)
-            // {
-            //     difference_type n = std::distance(first, last);
-            //     this->alloc = alloc;
-            //     this->_size = n;
-            //     // exit(0);
-            //     V = this->alloc.allocate(_size);
-
-            //     for(difference_type i = 0; i < n; i++)
-            //     {
-            //         // i++;
-            //         std::cout << *first;
-  
-            //         // this->alloc.construct(V + i, *first);
-            //     }
-            // }
-            
+            template <class inputIterator>
+            explicit vector (inputIterator first, inputIterator last, const allocator_type& alloc = allocator_type()) : alloc(alloc)
+            {
+                while(first != last)
+                {
+                    std::cout << *first << " <<<<\n";
+                    push_back(*first);
+                    first++;
+                }
+            }
             vector(vector const &vec)
             {
                 *this = vec;
@@ -179,21 +171,52 @@ namespace ft
             // iterator erase( iterator pos );
             void push_back( const T& value )
             {
-                if(_size + 1 == _capacity)
+                if(_size == 0)
+                {
+                    _size += 1;
+                    this->V = alloc.allocate(_size);
+                    alloc.construct(&V[0], value);
+                    return ;
+                }
+                else if(_size == _capacity)
                 {
                     this->_size += 1;
                     this->_capacity *= 2; 
                     pointer temp;
                     temp = this->V;
                     this->V = alloc.allocate(_capacity);
-                    for(size_type i = 0; i < _size - 1; i++)
+                    for(size_type i = 0; i < _size; i++)
                     {
-                        this->V = alloc.construct(&V[i], temp[i]);
+                        alloc.construct(&V[i], temp[i]);
                         if(i + 1 == _size)
                         {
-                            this->V = alloc.construct(&V[i], value);
+                            alloc.construct(&V[i], value);
+                            for(size_type i = 0; i < _size - 1; i++)
+                                alloc.destroy(temp + i);
+                            alloc.deallocate(temp, _size - 1);
                             return ;
-                        } 
+                        }
+                    }
+                    return ;
+                }
+                else
+                {
+                    this->_size += 1;
+                    pointer temp;
+                    temp = this->V;
+                    this->V = alloc.allocate(_size);
+                    for(size_type i = 0; i < _size; i++)
+                    {
+                        alloc.construct(&V[i], temp[i]);
+                        if(i + 1 == _size)
+                        {
+                            alloc.construct(&V[i], value);
+                            for(size_type i = 0; i < _size - 1; i++)
+                                alloc.destroy(temp + i);
+                            alloc.deallocate(temp, _size - 1);
+                            return ;
+                        }
+                        
                     }
                     return ;
                 }
