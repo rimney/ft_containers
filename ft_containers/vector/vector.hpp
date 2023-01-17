@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
+/*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/17 19:27:17 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/16 22:50:37 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ namespace ft
         private :
             pointer V;
             size_type _size;
-            size_type _capacity;
+            size_type capacity;
             allocator_type alloc;
         public:
             explicit vector (const allocator_type& alloc = allocator_type())
@@ -51,7 +51,7 @@ namespace ft
                 std::cout << "Vector Default Constructor Called\n";
                 V = NULL;
                 this->_size = 0;
-                this->_capacity = 0;
+                this->capacity = 0;
                 this->alloc = alloc;
             }
             explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())            {
@@ -64,26 +64,29 @@ namespace ft
                     this->alloc.construct(&V[i], val + i);
                 }
                 this->_size = n;
-                this->_capacity = n;
+                this->capacity = n;
             }
             //
-            // template <class inputIterator>
-            // explicit vector (inputIterator first, inputIterator last, const allocator_type& alloc = allocator_type(), typename std::enable_if<!std::is_integral<inputIterator>::value>::type* = 0)
-            // {
-            //     difference_type n = std::distance(first, last);
-            //     this->alloc = alloc;
-            //     this->_size = n;
-            //     // exit(0);
-            //     V = this->alloc.allocate(_size);
+            template <class inputIterator>
+            explicit vector (inputIterator first, inputIterator last, const allocator_type& alloc = allocator_type(), typename std::enable_if<!std::is_integral<inputIterator>::value>::type* = 0)
+            {
+                this->alloc = alloc;
+                // this->_size = n;
+                // exit(0);
+                // V = this->alloc.allocate(_size);
 
-            //     for(difference_type i = 0; i < n; i++)
-            //     {
-            //         // i++;
-            //         std::cout << *first;
+                // for(difference_type i = 0; i < n; i++)
+                // {
+                //     // i++;
+                //     std::cout << *first;
   
-            //         // this->alloc.construct(V + i, *first);
-            //     }
-            // }
+                //     // this->alloc.construct(V + i, *first);
+                // }
+                while(first != last){
+                    // this->push_back(*first);
+                    first++;
+                }
+            }
             
             vector(vector const &vec)
             {
@@ -94,7 +97,7 @@ namespace ft
             {
                 this->alloc = vec.alloc;
                 this->_size = vec._size;
-                this->_capacity = vec.capacity;
+                this->capacity = vec.capacity;
                 V = this->alloc.allocate(this->_size);
                 for(size_t i = 0; (size_t)i < this->_size;i++)
                     this->alloc.construct(&this->V[i], vec.V[i]);
@@ -166,44 +169,18 @@ namespace ft
                 return (this->_size);
              }
             size_type max_size() const;
-            // void reserve(size_type new_cap);
-            size_type capacity() const
-            {
-                return (this->_capacity);
-            }
-            // void clear();
-            iterator insert( const_iterator pos, const T& value )
-            {
-                return (iterator(value) + pos);
-            }
+            // void reserve(size_type new_cap); 
+            // size_type capacity() const;
+            // void clear(); // it desrtroys the objects assign size to 0 and alloc.destroy to all elements
+            // iterator insert( const_iterator pos, const T& value );
             // iterator erase( iterator pos );
-            void push_back( const T& value )
-            {
-                if(_size + 1 == _capacity)
-                {
-                    this->_size += 1;
-                    this->_capacity *= 2; 
-                    pointer temp;
-                    temp = this->V;
-                    this->V = alloc.allocate(_capacity);
-                    for(size_type i = 0; i < _size - 1; i++)
-                    {
-                        this->V = alloc.construct(&V[i], temp[i]);
-                        if(i + 1 == _size)
-                        {
-                            this->V = alloc.construct(&V[i], value);
-                            return ;
-                        } 
-                    }
-                    return ;
-                }
-            }
+            // void push_back( const T& value );
             // void pop_back();
             // void resize( size_type count );
             // void resize( size_type count, T value = T() );
             // void swap( vector & other );
             // void swap(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2); // std::swap
-            // bool   operator>=(ft::vectorr<T, Alloc> & V, ft::vector<T, Alloc> & V2);
+            // bool   operator>=(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
             // bool   operator==(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
             // bool   operator<=(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
             // bool   operator!=(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
