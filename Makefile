@@ -6,7 +6,7 @@
 #    By: rimney <rimney@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 23:53:37 by rimney            #+#    #+#              #
-#    Updated: 2023/01/12 00:08:15 by rimney           ###   ########.fr        #
+#    Updated: 2023/01/18 02:55:50 by rimney           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,6 @@ all :
 	@echo "make vector"
 
 vector :
-	c++ $(FLAGS) $(V_SRCS) $(MAIN_SRCS) -o $(VNAME)
+	c++ $(FLAGS) $(V_SRCS) $(MAIN_SRCS) -o $(VNAME) -g
 
 .PHONY : vector
