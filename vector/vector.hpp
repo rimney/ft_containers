@@ -6,7 +6,7 @@
 /*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/18 03:17:08 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/18 21:58:14 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ namespace ft
                 this->_size = n;
                 this->_capacity = n;
             }
-            //
             template <class inputIterator>
             explicit vector (inputIterator first, inputIterator last, const allocator_type& alloc = allocator_type()) : alloc(alloc)
             {
@@ -101,16 +100,6 @@ namespace ft
                 this->alloc.deallocate(this->V, _capacity);
                 std::cout << "Vector Distructor Called\n";
             }
-            reference & operator[](size_type index)
-            {
-                // if(index > this->_size | (int)index < 0)
-                //     return (0);
-                return (this->V[index]);
-            }
-            const_reference & operator[](size_type index) const
-            {
-                return (this->V[index]);
-            }
             void assign(size_type count, const T& value )
             {
                 clear();
@@ -121,7 +110,6 @@ namespace ft
                 for(size_type i = 0; i < count; i++)
                 {
                     alloc.construct(V + i, value);
-                    std::cout << "value > " << value << "\n";
                     //push_back(value);
                 }
                 std::cout << "====" << V[0] << std::endl;
@@ -136,23 +124,35 @@ namespace ft
                     throw("access error");
                 return (V[pos]);
             }
-            // reference back();
-            // T* data();
-             iterator begin()
-             {
+            reference & operator[](size_type index)
+            {
+                // if(index > this->_size | (int)index < 0)
+                //     return (0);
+                return (this->V[index]);
+            }
+            const_reference & operator[](size_type index) const
+            {
+                return (this->V[index]);
+            }
+            reference front()
+            {
+                return (this->V[0]);
+            }
+            reference back()
+            {
+                return (this->V[_size - 1]);
+            }
+            T* data()
+            {
+                return (this->V);
+            }
+            iterator begin()
+            {
                 return (iterator(V));
-             }
+            }
             const_iterator cbegin() const
             {
                 return (const_iterator(V));
-            }
-            reverse_iterator rbegin()
-            {
-                return (reverse_iterator(this->V + _size));
-            }
-            const_reverse_iterator crbegin() const
-            {
-                return (const_reverse_iterator(this->V + _size));
             }
             iterator end()
             {
@@ -161,6 +161,14 @@ namespace ft
             const_iterator cend() const
             {
                 return (const_iterator(V + _size - 1));
+            }
+            reverse_iterator rbegin()
+            {
+                return (reverse_iterator(this->V + _size));
+            }
+            const_reverse_iterator crbegin() const
+            {
+                return (const_reverse_iterator(this->V + _size));
             }
             reverse_iterator rend()
             {
@@ -179,7 +187,24 @@ namespace ft
                return (this->_size);
             }
             size_type max_size() const;
-            // void reserve(size_type new_cap);
+            void reserve(size_type new_cap)
+            {
+                if(new_cap >= this->_capacity)
+                {
+                    this->_capacity = new_cap; 
+                    pointer temp;
+                    temp = this->V;
+
+                    this->V = alloc.allocate(_capacity);
+                    for(size_type i = 0; i < _size; i++)
+                    {
+                        alloc.construct(&V[i], temp[i]);
+                    }
+                    for(size_type i = 0; i < _size; i++)
+                        alloc.destroy(temp + i);
+                    alloc.deallocate(temp, _size);
+                }
+            }
             size_type capacity() const
             {
                 return (this->_capacity);
@@ -194,14 +219,25 @@ namespace ft
             {
                 return (iterator(value) + pos);
             }
-            // iterator erase( iterator pos );
+            iterator erase( iterator pos )
+            {
+                iterator it = pos;
+                while(it + 1 != this->end()){
+                    *(it) = *(it + 1);
+                    it++;
+                }
+                this->alloc.destroy(V + (_size - 1));
+                _size -= 1;
+                return (pos);
+            }
+
             void push_back( const T& value )
             {
                 if(_size == 0)
                 {
                     _size = 1;
-                    this->V = alloc.allocate(_size);
                     this->_capacity = 1;
+                    this->V = alloc.allocate(_capacity);
                     alloc.construct(&V[0], value);
                     return ;
                 }
@@ -228,14 +264,32 @@ namespace ft
                 }
                 else
                 {
-                    printf("HERE\n");
                     this->alloc.construct(&V[_size++], value);
                     return ;
                 }
             }
             // void pop_back();
-            // void resize( size_type count );
-            // void resize( size_type count, T value = T() );
+            // void resize( size_type count, T value = T() )
+            // {
+            //     if(this->_size >= count && this->_capacity >= count)
+            //     {
+            //         while(count > _size){
+            //             alloc.destroy(&V[_size--]);
+            //         }
+            //     }
+            //     if(this->_size < count && this->_capacity > count)
+            //     {
+            //         while(_size < count)
+            //         {
+            //             this->alloc.construct(&V + _size, value);
+            //             _size++;
+            //         }
+            //     }
+            //     else
+            //     {
+            //         // temp and re 
+            //     }
+            // }
             // void swap( vector & other );
             // void swap(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2); // std::swap
             // bool   operator>=(ft::vectorr<T, Alloc> & V, ft::vector<T, Alloc> & V2);
