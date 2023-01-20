@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/18 21:58:14 by rimney           ###   ########.fr       */
+/*   Updated: 2023/01/20 01:50:20 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 namespace ft
 {
     template<class T, class Alloc = std::allocator<T> >
-    class vector
+    class vector 
     {
         public :
             typedef T value_type;
@@ -69,7 +69,6 @@ namespace ft
             template <class inputIterator>
             explicit vector (inputIterator first, inputIterator last, const allocator_type& alloc = allocator_type()) : alloc(alloc)
             {
-                this->alloc = alloc;
                 this->_size = 0;
                 this->_capacity = 0;
                 while(first != last)
@@ -87,7 +86,7 @@ namespace ft
             {
                 this->alloc = vec.alloc;
                 this->_size = vec._size;
-                this->_capacity = vec.capacity;
+                this->_capacity = vec._capacity;
                 V = this->alloc.allocate(this->_size);
                 for(size_t i = 0; (size_t)i < this->_size;i++)
                     this->alloc.construct(&this->V[i], vec.V[i]);
@@ -268,30 +267,54 @@ namespace ft
                     return ;
                 }
             }
-            // void pop_back();
-            // void resize( size_type count, T value = T() )
-            // {
-            //     if(this->_size >= count && this->_capacity >= count)
-            //     {
-            //         while(count > _size){
-            //             alloc.destroy(&V[_size--]);
-            //         }
-            //     }
-            //     if(this->_size < count && this->_capacity > count)
-            //     {
-            //         while(_size < count)
-            //         {
-            //             this->alloc.construct(&V + _size, value);
-            //             _size++;
-            //         }
-            //     }
-            //     else
-            //     {
-            //         // temp and re 
-            //     }
-            // }
-            // void swap( vector & other );
-            // void swap(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2); // std::swap
+            void pop_back()
+            {
+                if(_size > 0)
+                {
+                    this->_size -= 1;
+                    this->alloc.destroy(V + _size);
+                }
+            }
+            void resize( size_type count, T value = T() )
+            {
+                if(this->_size >= count && this->_capacity >= count)
+                {
+                    while(count > _size){
+                        alloc.destroy(&V[_size--]);
+                    }
+                }
+                if(this->_size < count && this->_capacity > count)
+                {
+                    while(_size < count)
+                    {
+                        this->alloc.construct(V + _size, value);
+                        _size++;
+                    }
+                }
+                else
+                {
+                    pointer temp;
+                    temp = this->V;
+                    _capacity = count;
+                    _size = count;
+                    this->V = alloc.allocate(_capacity);
+                    for(size_type i = 0; i < _size; i++)
+                    {
+                        alloc.construct(&V[i], value);
+                    }
+                    for(size_type i = 0; i < _size; i++)
+                        alloc.destroy(temp + i);
+                    alloc.deallocate(temp, _size);
+                }
+            }
+                        void swap( vector & other )
+            {
+                vector temp;
+                temp = *this;
+                *this = other;
+                other = temp;
+            }
+            
             // bool   operator>=(ft::vectorr<T, Alloc> & V, ft::vector<T, Alloc> & V2);
             // bool   operator==(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
             // bool   operator<=(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);
