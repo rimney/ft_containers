@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rimney <rimney@student.42.fr>              +#+  +:+       +#+         #
+#    By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 23:53:37 by rimney            #+#    #+#              #
-#    Updated: 2023/01/18 02:55:50 by rimney           ###   ########.fr        #
+#    Updated: 2023/01/20 02:16:26 by rimney           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ VNAME = containers
 MNAME = map
 SNAME = stack
 # V_SRCS = Vector/vector.hpp
-MAIN_SRCS = main.cpp
+MAIN_SRCS = main.cpp 
 FLAGS = -Wall -Wextra -Werror
 
 all :

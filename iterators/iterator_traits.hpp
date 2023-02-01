@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 12:06:07 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/16 16:52:09 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/01 18:52:49 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,18 @@ namespace ft
             typedef typename Iterator::reference reference;
             IteratorTraits() {}
             ~IteratorTraits() {}
-            
-
+    };
+    template <class T>
+    class IteratorTraits<T*>
+    {
+        public :
+            typedef  std::random_access_iterator_tag iterator_category;
+            typedef  T value_type;
+            typedef std::ptrdiff_t difference_type;
+            typedef T* pointer;
+            typedef T & reference;
+            IteratorTraits() {}
+            ~IteratorTraits() {}
     };
 }
 

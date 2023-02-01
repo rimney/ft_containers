@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:08:55 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/18 03:17:08 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/01 18:46:54 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 namespace ft
 {
     template <class T>
-    class reverseIterator : ft::Iterator<typename ft::IteratorTraits<T>::iterator_category, typename ft::IteratorTraits<T>::value_type>
+    class reverseIterator : ft::Iterator<typename T::value_type>
     {
-        public :
+       public :
             typedef typename ft::IteratorTraits<T>::difference_type difference_type;
             typedef typename ft::IteratorTraits<T>::value_type value_type;
             typedef typename ft::IteratorTraits<T>::iterator_category iterator_category;

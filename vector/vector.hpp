@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/20 01:50:20 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/01 19:22:58 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <iterator>
 #include "../iterators/randomAccessIterator.hpp"
 #include "../iterators/iterator_traits.hpp"
+#include "enable_if.hpp"
 #include "../iterators/reverse_iterator.hpp"
 
 namespace ft
@@ -48,14 +49,13 @@ namespace ft
         public:
             explicit vector (const allocator_type& alloc = allocator_type())
             {
-                std::cout << "Vector Default Constructor Called\n";
                 V = NULL;
                 this->_size = 0;
                 this->_capacity = 0;
                 this->alloc = alloc;
             }
-            explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())            {
-                std::cout << "Vector Paramitarized Constructor Called\n";
+            explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
+            {
                 this->alloc = alloc;
                 V = this->alloc.allocate(n);
                 for(size_type i = 0; i < n; i++)
@@ -67,11 +67,12 @@ namespace ft
                 this->_capacity = n;
             }
             template <class inputIterator>
-            explicit vector (inputIterator first, inputIterator last, const allocator_type& alloc = allocator_type()) : alloc(alloc)
+            vector (inputIterator first, inputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<inputIterator>::value,inputIterator>::type* = 0)
             {
+                this->alloc = alloc;
                 this->_size = 0;
                 this->_capacity = 0;
-                while(first != last)
+                while(first <= last)
                 {
                     push_back(*first);
                     first++;
@@ -80,7 +81,6 @@ namespace ft
             vector(vector const &vec)
             {
                 *this = vec;
-                std::cout << "Vector copy constructor Called\n";
             }
             vector & operator=(vector const  & vec)
             {
@@ -117,7 +117,7 @@ namespace ft
             {
                 return (this->alloc);
             }
-            reference at( size_type pos )
+            reference at( size_type const  pos ) const
             {
                 if(pos >= this->_size)
                     throw("access error");
@@ -155,7 +155,7 @@ namespace ft
             }
             iterator end()
             {
-                return (iterator(V + _size - 1));
+                return (iterator(V + _size));
             }
             const_iterator cend() const
             {
@@ -218,7 +218,7 @@ namespace ft
             {
                 return (iterator(value) + pos);
             }
-            iterator erase( iterator pos )
+            iterator erase( iterator const pos )
             {
                 iterator it = pos;
                 while(it + 1 != this->end()){
@@ -307,13 +307,15 @@ namespace ft
                     alloc.deallocate(temp, _size);
                 }
             }
-                        void swap( vector & other )
+            
+            void swap( vector & other )
             {
                 vector temp;
                 temp = *this;
                 *this = other;
                 other = temp;
             }
+            
             
             // bool   operator>=(ft::vectorr<T, Alloc> & V, ft::vector<T, Alloc> & V2);
             // bool   operator==(ft::vector<T, Alloc> & V, ft::vector<T, Alloc> & V2);

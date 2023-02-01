@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 11:25:25 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/16 16:52:25 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/01 18:53:14 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@
 
 namespace ft
 {
-    template < class category, class T, class distance = std::ptrdiff_t, class Pointer = T* , class reference = T& >
+    template <class T>
     class Iterator
     {
         public :
-            typedef T value_type;
-            typedef distance difference_type;
-            typedef Pointer pointer;
-            typedef reference Reference;
-            typedef category Category;
+            typedef typename ft::IteratorTraits<T*>::difference_type difference_type;
+            typedef typename ft::IteratorTraits<T*>::value_type value_type;
+            typedef typename ft::IteratorTraits<T*>::iterator_category Category;
+            typedef typename ft::IteratorTraits<T*>::pointer pointer;
+            typedef typename ft::IteratorTraits<T*>::reference reference;
             Iterator() {}
             ~Iterator() {}
     };

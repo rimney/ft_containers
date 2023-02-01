@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 19:13:59 by rimney            #+#    #+#             */
-/*   Updated: 2023/01/20 00:59:49 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/01 18:58:23 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,37 @@
 //     return (0);
 // }
 
-int main ()
+// int main ()
+// {
+//   ft::vector<int> foo (3,100);   // three ints with a value of 100
+//   ft::vector<int> bar (5,200);   // five ints with a value of 200
+
+//   foo.swap(bar);
+
+//   std::cout << "foo contains:";
+//   for (unsigned i=0; i<foo.size(); i++)
+//     std::cout << ' ' << foo[i];
+//   std::cout << '\n';
+
+//   std::cout << "bar contains:";
+//   for (unsigned i=0; i<bar.size(); i++)
+//     std::cout << ' ' << bar[i];
+//   std::cout << '\n';
+
+//   return 0;
+// }
+
+int main()
 {
-  ft::vector<int> foo (3,100);   // three ints with a value of 100
-  ft::vector<int> bar (5,200);   // five ints with a value of 200
-
-  foo.swap(bar);
-
-  std::cout << "foo contains:";
-  for (unsigned i=0; i<foo.size(); i++)
-    std::cout << ' ' << foo[i];
-  std::cout << '\n';
-
-  std::cout << "bar contains:";
-  for (unsigned i=0; i<bar.size(); i++)
-    std::cout << ' ' << bar[i];
-  std::cout << '\n';
-
-  return 0;
+  ft::vector<int> A;
+  A.push_back(1);
+  A.push_back(2);
+  A.push_back(3);
+  A.push_back(4);
+  A.push_back(5);
+  // for(size_t i = 0; i < A.size(); i++)
+  //   std::cout << A[i] << '\n';
+  ft::vector<int> B(A.begin(), A.end());
+  for(size_t i = 0; i < B.size(); i++)
+    std::cout << B[i] << '\n';
 }
