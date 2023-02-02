@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/01 19:22:58 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/01 19:23:36 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,12 @@ namespace ft
                 V = this->alloc.allocate(this->_size);
                 for(size_t i = 0; (size_t)i < this->_size;i++)
                     this->alloc.construct(&this->V[i], vec.V[i]);
-                std::cout << "Vector Copy Assignment Overload Called\n";
                 return (*this);
             }
             ~vector()
             {
                 clear();
                 this->alloc.deallocate(this->V, _capacity);
-                std::cout << "Vector Distructor Called\n";
             }
             void assign(size_type count, const T& value )
             {
@@ -111,7 +109,6 @@ namespace ft
                     alloc.construct(V + i, value);
                     //push_back(value);
                 }
-                std::cout << "====" << V[0] << std::endl;
             }
             allocator_type get_allocator() const
             {
