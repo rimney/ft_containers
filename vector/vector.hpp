@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/01 19:23:36 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/04 22:57:58 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ namespace ft
             typedef reverseIterator<iterator> reverse_iterator;
             typedef reverseIterator<const_iterator> const_reverse_iterator;
             typedef typename ft::IteratorTraits<iterator>::difference_type difference_type; 
-            
-            
         private :
             pointer V;
             size_type _size;
@@ -60,8 +58,7 @@ namespace ft
                 V = this->alloc.allocate(n);
                 for(size_type i = 0; i < n; i++)
                 {
-                    
-                    this->alloc.construct(&V[i], val + i);
+                    this->alloc.construct(&V[i], val);
                 }
                 this->_size = n;
                 this->_capacity = n;
@@ -70,12 +67,13 @@ namespace ft
             vector (inputIterator first, inputIterator last, const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<inputIterator>::value,inputIterator>::type* = 0)
             {
                 this->alloc = alloc;
-                this->_size = 0;
-                this->_capacity = 0;
-                while(first <= last)
+                this->_size = last - first;
+                this->_capacity = last - first;
+                this->V = this->alloc.allocate(last - first);
+                for(int i = 0; first < last; first++)
                 {
-                    push_back(*first);
-                    first++;
+                    this->alloc.construct(V + i, *first);
+                    i++;
                 }
             }
             vector(vector const &vec)
@@ -94,36 +92,41 @@ namespace ft
             }
             ~vector()
             {
-                clear();
-                this->alloc.deallocate(this->V, _capacity);
+                    clear();
+                    if (this->V)
+                        this->alloc.deallocate(this->V, _capacity);
             }
-            void assign(size_type count, const T& value )
+            void assign(size_type n, const T& value )
             {
-                clear();
-                this->alloc.deallocate(this->V,this->_capacity);
-                this->_size = count;
-                this->_capacity = count;
-                this->V = alloc.allocate(count);
-                for(size_type i = 0; i < count; i++)
-                {
-                    alloc.construct(V + i, value);
-                    //push_back(value);
-                }
+                for (size_type i = 0; i < this->_size; i++)
+                    this->alloc.destroy(this->V + i);
+                if(this->_size > 0 || this->V)
+                    this->alloc.deallocate(this->V, _capacity);
+                this->_size = n;
+                this->_capacity = _size;
+                this->V = this->alloc.allocate(_size);
+                for (size_type i = 0; i < _size; i++)
+                    this->alloc.construct(this->V + i, value);
+                
             }
             allocator_type get_allocator() const
             {
                 return (this->alloc);
             }
-            reference at( size_type const  pos ) const
+            reference at( size_type pos )
             {
                 if(pos >= this->_size)
-                    throw("access error");
+                    throw std::out_of_range("out of range a zbi");
                 return (V[pos]);
             }
-            reference & operator[](size_type index)
+            const_reference at(size_type const pos) const
             {
-                // if(index > this->_size | (int)index < 0)
-                //     return (0);
+                if(pos >= this->_size)
+                    throw std::out_of_range("out of range a zbi");
+                return (V[pos]);
+            }
+            reference &  operator[](size_type index)
+            {
                 return (this->V[index]);
             }
             const_reference & operator[](size_type index) const
@@ -134,7 +137,15 @@ namespace ft
             {
                 return (this->V[0]);
             }
+            const_reference front() const
+            {
+                return (this->V[0]);
+            }
             reference back()
+            {
+                return (this->V[_size - 1]);
+            }
+            const_reference back() const
             {
                 return (this->V[_size - 1]);
             }
@@ -142,7 +153,7 @@ namespace ft
             {
                 return (this->V);
             }
-            iterator begin()
+            iterator begin() const
             {
                 return (iterator(V));
             }
@@ -150,7 +161,7 @@ namespace ft
             {
                 return (const_iterator(V));
             }
-            iterator end()
+            iterator end() const
             {
                 return (iterator(V + _size));
             }
@@ -182,31 +193,35 @@ namespace ft
             {
                return (this->_size);
             }
-            size_type max_size() const;
-            void reserve(size_type new_cap)
+            size_type max_size() const
             {
-                if(new_cap >= this->_capacity)
-                {
-                    this->_capacity = new_cap; 
-                    pointer temp;
-                    temp = this->V;
-
-                    this->V = alloc.allocate(_capacity);
-                    for(size_type i = 0; i < _size; i++)
-                    {
-                        alloc.construct(&V[i], temp[i]);
-                    }
-                    for(size_type i = 0; i < _size; i++)
-                        alloc.destroy(temp + i);
-                    alloc.deallocate(temp, _size);
-                }
+                return (this->alloc.max_size());
             }
+		void reserve(size_type n) {
+			if (n > max_size()) 
+            {
+				throw (std::length_error("ft::vector::reserve"));
+			} else if (n > _capacity) {
+				pointer new_ptr = alloc.allocate(n);
+				for (size_type i = 0; i < _size; i++)
+                {
+				    alloc.construct(new_ptr + i, *(V + i));
+                    alloc.destroy(V + i);
+                }
+                if(this->V)
+                    alloc.deallocate(V, _capacity);
+				this->V = new_ptr;
+				_capacity = n;
+			}
+		}
             size_type capacity() const
             {
                 return (this->_capacity);
             }
             void clear()
             {
+                if(!this->V)
+                    return ;
                 for(size_type i = 0; i < this->_size; i++)
                     this->alloc.destroy(V + i);
                 this->_size = 0;
@@ -227,43 +242,19 @@ namespace ft
                 return (pos);
             }
 
-            void push_back( const T& value )
+		    void push_back(const value_type & value)
             {
-                if(_size == 0)
+			    if (this->_size == this->_capacity)
                 {
-                    _size = 1;
-                    this->_capacity = 1;
-                    this->V = alloc.allocate(_capacity);
-                    alloc.construct(&V[0], value);
-                    return ;
+                    if(_size == 0)
+                        reserve(1);
+                    else
+				        reserve(_size * 2);
                 }
-                else if(_size == _capacity)
-                {
-                    this->_size += 1;
-                    this->_capacity *= 2; 
-                    pointer temp;
-                    temp = this->V;
-                    this->V = alloc.allocate(_capacity);
-                    for(size_type i = 0; i < _size; i++)
-                    {
-                        alloc.construct(&V[i], temp[i]);
-                        if(i + 1 == _size)
-                        {
-                            alloc.construct(&V[i], value);
-                            for(size_type i = 0; i < _size - 1; i++)
-                                alloc.destroy(temp + i);
-                            alloc.deallocate(temp, _size - 1);
-                            return ;
-                        }
-                    }
-                    return ;
-                }
-                else
-                {
-                    this->alloc.construct(&V[_size++], value);
-                    return ;
-                }
-            }
+			    this->alloc.construct(this->V + this->_size, value);
+			    this->_size += 1;
+		    }
+            
             void pop_back()
             {
                 if(_size > 0)
@@ -274,13 +265,16 @@ namespace ft
             }
             void resize( size_type count, T value = T() )
             {
-                if(this->_size >= count && this->_capacity >= count)
+                if(this->_size >= count && this->_capacity >= count && this->_size)
                 {
-                    while(count > _size){
-                        alloc.destroy(&V[_size--]);
+                    while(count > _size)
+                    {
+                        this->_size -= 1;
+                        if(V + _size)
+                            alloc.destroy(&V[_size]);
                     }
                 }
-                if(this->_size < count && this->_capacity > count)
+                if(this->_size < count && this->_capacity > count && this->_size)
                 {
                     while(_size < count)
                     {
@@ -300,7 +294,10 @@ namespace ft
                         alloc.construct(&V[i], value);
                     }
                     for(size_type i = 0; i < _size; i++)
-                        alloc.destroy(temp + i);
+                    {
+                        if(temp + i)
+                            alloc.destroy(temp + i);
+                    }
                     alloc.deallocate(temp, _size);
                 }
             }

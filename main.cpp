@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 19:13:59 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/01 18:58:23 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/02 16:33:39 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,7 @@
 
 int main()
 {
-  ft::vector<int> A;
-  A.push_back(1);
-  A.push_back(2);
-  A.push_back(3);
-  A.push_back(4);
-  A.push_back(5);
-  // for(size_t i = 0; i < A.size(); i++)
-  //   std::cout << A[i] << '\n';
-  ft::vector<int> B(A.begin(), A.end());
-  for(size_t i = 0; i < B.size(); i++)
-    std::cout << B[i] << '\n';
+	ft::vector<char> A(65, 'a');
+	std::cout << A[4] << "\n";
+	return (0);
 }

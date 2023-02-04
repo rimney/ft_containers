@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:02:44 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/01 19:19:26 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/04 22:58:35 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ namespace ft
             typedef typename ft::Iterator<T>::reference reference;
             randomAccessIterator() : _pointer(NULL){}
             randomAccessIterator(const pointer ptr) : _pointer(ptr) {}
-            operator randomAccessIterator<T> () {
-            return randomAccessIterator< T>(_pointer);
+            operator randomAccessIterator<const T> () 
+            {
+                return randomAccessIterator< T>(_pointer);
             }
             randomAccessIterator  Iterator(randomAccessIterator & R) const
             {
@@ -55,29 +56,19 @@ namespace ft
             {
                 return (this->_pointer);
             }
-            difference_type operator-(randomAccessIterator const & diff) const
-            {
+        randomAccessIterator operator+(difference_type n) const {
+            return randomAccessIterator(this->_pointer + n);
+        }
+        randomAccessIterator operator-(difference_type n) const {
+            return randomAccessIterator(this->_pointer - n);
+        }
 
-                return (this->_pointer - diff);
-            }
-            difference_type  operator+(randomAccessIterator const & diff) const 
-            {
-                return (this->_pointer + diff);
-            }
-
-            randomAccessIterator operator-(difference_type diff) const
-            {
-                randomAccessIterator it = *this;
-                it._pointer -= diff;
-                return (it);
-            }
-            randomAccessIterator operator+(difference_type diff) const 
-            {
-                randomAccessIterator it = *this;
-                it._pointer += diff;
-                return (it);
-            }
-            
+        difference_type  operator-(const randomAccessIterator &other) const {
+            return this->_pointer - other._pointer;
+        }
+        difference_type  operator+(const randomAccessIterator &other) const {
+            return this->_pointer + other._pointer;
+        }
             randomAccessIterator operator+=(difference_type diff)
             {
                 this->_pointer += diff;
@@ -155,9 +146,25 @@ namespace ft
             {
                 return (this->_pointer != temp->_pointer);
             }
+            
         private :
             T *_pointer;
         };
+        template<class T>
+        randomAccessIterator<T> operator+(typename randomAccessIterator<T>::difference_type n, randomAccessIterator<T> const &other) {
+            return n + &(*other);
+        }
+        template<class T>
+        randomAccessIterator<T> operator-(typename randomAccessIterator<T>::difference_type n, randomAccessIterator<T> const &other) {
+            return n -  &(*other);
+        }
+        template<class T>
+        bool operator==(const T *ptr, const randomAccessIterator<T> &other) {
+            return ptr == other._ptr;
+        }
+        template<class T>
+        bool operator!=(const T *ptr, const randomAccessIterator<T> &other) {
+            return ptr != other._ptr;
+        }
     }
-
     #endif

@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 12:06:07 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/01 18:52:49 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/03 23:28:59 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,19 @@ namespace ft
             IteratorTraits() {}
             ~IteratorTraits() {}
     };
+    template <class T>
+    class IteratorTraits<const T*>
+    {
+        public :
+            typedef  std::random_access_iterator_tag iterator_category;
+            typedef  T value_type;
+            typedef std::ptrdiff_t difference_type;
+            typedef const T* pointer;
+            typedef const T & reference;
+            IteratorTraits() {}
+            ~IteratorTraits() {}
+    };
+    
 }
 
 #endif
