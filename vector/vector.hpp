@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/04 22:57:58 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/04 23:28:03 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,12 +201,15 @@ namespace ft
 			if (n > max_size()) 
             {
 				throw (std::length_error("ft::vector::reserve"));
-			} else if (n > _capacity) {
+			}
+            else if (n >= _capacity)
+            {
 				pointer new_ptr = alloc.allocate(n);
 				for (size_type i = 0; i < _size; i++)
                 {
-				    alloc.construct(new_ptr + i, *(V + i));
-                    alloc.destroy(V + i);
+				    alloc.construct(new_ptr + i, V[i]);
+                    if(V + i)
+                        alloc.destroy(V + i);
                 }
                 if(this->V)
                     alloc.deallocate(V, _capacity);
@@ -263,44 +266,24 @@ namespace ft
                     this->alloc.destroy(V + _size);
                 }
             }
-            void resize( size_type count, T value = T() )
-            {
-                if(this->_size >= count && this->_capacity >= count && this->_size)
-                {
-                    while(count > _size)
+			void resize (size_type n, value_type val = value_type())
+			{
+				if (n == this->_size)
+					return ;
+				if (n < this->_size)
+					for (size_type i = n; i < this->_size; i++)
                     {
-                        this->_size -= 1;
-                        if(V + _size)
-                            alloc.destroy(&V[_size]);
+                        if(V + i)
+						    this->alloc.destroy(V + i);
                     }
-                }
-                if(this->_size < count && this->_capacity > count && this->_size)
-                {
-                    while(_size < count)
-                    {
-                        this->alloc.construct(V + _size, value);
-                        _size++;
-                    }
-                }
-                else
-                {
-                    pointer temp;
-                    temp = this->V;
-                    _capacity = count;
-                    _size = count;
-                    this->V = alloc.allocate(_capacity);
-                    for(size_type i = 0; i < _size; i++)
-                    {
-                        alloc.construct(&V[i], value);
-                    }
-                    for(size_type i = 0; i < _size; i++)
-                    {
-                        if(temp + i)
-                            alloc.destroy(temp + i);
-                    }
-                    alloc.deallocate(temp, _size);
-                }
-            }
+				else
+				{
+					reserve(n);
+					for (size_type i = this->_size; i < n; i++)
+						this->alloc.construct(&this->V[i], val);
+				}
+				this->_size = n;
+			}
             
             void swap( vector & other )
             {
