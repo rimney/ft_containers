@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
+/*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/04 23:28:03 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/05 02:06:56 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,10 +229,15 @@ namespace ft
                     this->alloc.destroy(V + i);
                 this->_size = 0;
             }
-            iterator insert( const_iterator pos, const T& value )
-            {
-                return (iterator(value) + pos);
-            }
+            // iterator insert( const_iterator pos, const T& value )
+            // {
+            //     if(this->_capacity >= this->_size + 1)
+            //     {
+                    
+            //     }
+            //     else
+
+            // }
             iterator erase( iterator const pos )
             {
                 iterator it = pos;

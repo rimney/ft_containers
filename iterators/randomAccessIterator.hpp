@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   randomAccessIterator.hpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
+/*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:02:44 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/04 22:58:35 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/05 00:08:50 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ namespace ft
             typedef typename ft::Iterator<T>::reference reference;
             randomAccessIterator() : _pointer(NULL){}
             randomAccessIterator(const pointer ptr) : _pointer(ptr) {}
-            operator randomAccessIterator<const T> () 
+            operator randomAccessIterator<const T>   () 
             {
-                return randomAccessIterator< T>(_pointer);
+                return randomAccessIterator<const T> (_pointer);
             }
             randomAccessIterator  Iterator(randomAccessIterator & R) const
             {
@@ -101,13 +101,15 @@ namespace ft
             }
             randomAccessIterator operator++()
             {
+                
                 this->_pointer += 1;
                 return *this;
             }
             randomAccessIterator operator++(int)
             {
-                ++this->_pointer;
-                return(*this);
+                pointer tmp = this->_pointer;
+                this->_pointer++;
+                return(tmp) ;
             }
             randomAccessIterator operator--()
             {
@@ -116,26 +118,20 @@ namespace ft
             }
             randomAccessIterator operator--(int)
             {
-                return(--this->_pointer);
+                pointer temp = this->_pointer;
+                this->_pointer -= 1;
+                return (temp);
                 
             }
-            randomAccessIterator operator+(difference_type diff)
+            // randomAccessIterator operator-(difference_type diff) const 
+            // {
+            //     return randomAccessIterator(this->_pointer - diff);
+            // }
+
+            difference_type operator-(randomAccessIterator diff)           
             {
-                return randomAccessIterator(diff + this->_pointer);
-            }
-            randomAccessIterator operator-(randomAccessIterator diff)
-            {
-                return randomAccessIterator(diff - this->_pointer);
-            }
-            template <class df>
-            randomAccessIterator<df> operator+(difference_type diff)           
-            {
-                return (this->_pointer + diff);
-            }
-            template <class fd>
-            randomAccessIterator<fd> operator-(difference_type diff)           
-            {
-                return this->_pointer - diff;
+                difference_type i = std::distance(diff._pointer, this->_pointer);
+                return i;
             }
             template <class re>
             bool operator==(const re *temp)
