@@ -6,7 +6,7 @@
 #    By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 23:53:37 by rimney            #+#    #+#              #
-#    Updated: 2023/01/20 02:16:26 by rimney           ###   ########.fr        #
+#    Updated: 2023/02/07 17:20:10 by rimney           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,6 @@ all :
 	@echo "make vector"
 
 vector :
-	c++ $(FLAGS) $(V_SRCS) $(MAIN_SRCS) -o $(VNAME) -g
+	c++ $(FLAGS) $(V_SRCS) $(MAIN_SRCS) -o $(VNAME) -g -fsanitize=address
 
 .PHONY : vector

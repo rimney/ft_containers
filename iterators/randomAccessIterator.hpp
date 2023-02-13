@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   randomAccessIterator.hpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:02:44 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/05 00:08:50 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/07 16:42:58 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,10 +157,6 @@ namespace ft
         template<class T>
         bool operator==(const T *ptr, const randomAccessIterator<T> &other) {
             return ptr == other._ptr;
-        }
-        template<class T>
-        bool operator!=(const T *ptr, const randomAccessIterator<T> &other) {
-            return ptr != other._ptr;
         }
     }
     #endif

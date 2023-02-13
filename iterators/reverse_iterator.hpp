@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:08:55 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/01 18:46:54 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/07 22:19:22 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ namespace ft
         public :
             reverseIterator() : i(nullptr) {}
             explicit reverseIterator(T p) : i(p) {}
-            template <class V>
-            reverseIterator(const reverseIterator<V> & r)
+            operator reverseIterator<const T>   () 
             {
-                this->i = r.i;
+                return reverseIterator<const T> (i);
             }
+	template <class Iter>
+		reverseIterator(const reverseIterator<Iter> &other): i(other.base()) {};
             T base() const
             {
                 return (this->i);
@@ -44,21 +45,20 @@ namespace ft
             reference  & operator*() const
             {
                 T tmp = this->i;
-                --tmp;
+                tmp -= 1;
                 return (*tmp);
             }
             pointer operator->() const
             {
-                return (this->i);
+               return &(operator*());
             }
-            reverseIterator operator+(difference_type n)
-            {
-                return (reverseIterator(this->i - n));
+            reverseIterator operator-(difference_type n) const {
+                return reverseIterator(i + n);
+            }          
+            reverseIterator operator+(difference_type n) const {
+                return reverseIterator(i - n);
             }
-            reverseIterator operator-(difference_type n)
-            {
-                return (reverseIterator(this->i + n));
-            }
+
             reverseIterator & operator++()
             {
                 this->i -= 1;
@@ -91,9 +91,9 @@ namespace ft
                 this->i += n;
                 return (*this);
             }
-            reverseIterator & operator[](difference_type n)
+            reference & operator[](difference_type n) const
             {
-                return (this->i[i + n - 1]);
+                return *(*this + n);
             }
             
    };
@@ -122,12 +122,28 @@ namespace ft
         {
             return (a.base() == b.base());
         }
-        template <class T>
-        bool operator!=(const reverseIterator<T>& a, const reverseIterator<T> & b)
+        template <class Iterator> 
+        bool operator!= (const reverseIterator<Iterator>& lhs,const reverseIterator<Iterator>& rhs)
         {
-            return (a.base() != b.base());
+            return (lhs.base() != rhs.base());
         }
-        
-}
+        template <class Iter>
+        typename reverseIterator<Iter>::difference_type
+        operator-(const reverseIterator<Iter>& x, const reverseIterator<Iter>& y) {
+            return y.base() - x.base();
+        }
+        template <class Iterator>
+        reverseIterator<Iterator> operator+(typename reverseIterator<Iterator>::difference_type n,
+            const reverseIterator<Iterator>& iter
+            )
+    {   
+        return (iter + n);
+    }
+        template<class IteratorL, class IteratorR>
+        bool operator!=(const reverseIterator<IteratorL>& lhs, const reverseIterator<IteratorR>& rhs)
+        {
+            return lhs.base() != rhs.base();
+        }
+}	
 
 #endif
