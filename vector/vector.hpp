@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/13 04:36:34 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/13 06:16:27 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,8 +299,34 @@ namespace ft
                 }
                 this->_size += 1;
                 return (pos);
-                         
+                        
             }
+            iterator    insert(iterator pos, size_type n, const_reference val)
+            {
+
+                if(this->_size + n > this->_capacity)
+                {
+                    size_type index = pos - begin();
+                    if(this->_size * n > this->_capacity * 2)
+                        reserve(this->_size + n);
+                    else
+                        reserve(this->_size * 2);
+                    pos = begin() + index;
+                }
+                for (size_type i = 0; i < n; i++)
+                    pos = insert(pos, val) + 1;
+                return (pos);
+            }
+            template <class InputIterator>
+		    iterator insert(iterator pos, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value,InputIterator>::type* = 0)
+		    {
+                while(first != last)
+                {
+                    pos = insert(pos, *first) + 1;
+                    first++;
+                }
+                return (pos);
+		}
             iterator erase( iterator const pos )
             {
                 iterator it = pos;
