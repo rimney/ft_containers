@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 12:08:55 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/07 22:19:22 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/16 04:32:57 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ namespace ft
             typedef typename ft::IteratorTraits<T>::reference reference;
         private :
             T i;
-        public :
-            reverseIterator() : i(nullptr) {}
+            public : 
+    reverseIterator() : i(nullptr) {}
             explicit reverseIterator(T p) : i(p) {}
             operator reverseIterator<const T>   () 
             {
@@ -97,36 +97,42 @@ namespace ft
             }
             
    };
-        template <class T>
-        bool operator<(const reverseIterator<T>& a, const reverseIterator<T> & b)
-        {
-            return (a.base() > b.base());
-        }
-        template <class T>
-        bool operator>(const reverseIterator<T>& a, const reverseIterator<T> & b)
-        {
-            return (a.base() < b.base());
-        }
-        template <class T>
-        bool operator<=(const reverseIterator<T>& a, const reverseIterator<T> & b)
-        {
-            return (a.base() >= b.base());
-        }
-        template <class T>
-        bool operator>=(const reverseIterator<T>& a, const reverseIterator<T> & b)
-        {
-            return (a.base() <= b.base());
-        }
-        template <class T>
-        bool operator==(const reverseIterator<T>& a, const reverseIterator<T> & b)
-        {
-            return (a.base() == b.base());
-        }
-        template <class Iterator> 
-        bool operator!= (const reverseIterator<Iterator>& lhs,const reverseIterator<Iterator>& rhs)
-        {
-            return (lhs.base() != rhs.base());
-        }
+	template<typename Iterator1, typename Iterator2>
+	bool	operator==(reverseIterator<Iterator1> const& it1, reverseIterator<Iterator2> const& it2)
+	{
+		return (it1.base() == it2.base());
+	}
+
+	template<typename Iterator1, typename Iterator2>
+	bool	operator!=(reverseIterator<Iterator1> const& it1, reverseIterator<Iterator2> const& it2)
+	{
+		return (!(it1.base() == it2.base()));
+	}
+
+	template<typename Iterator1, typename Iterator2>
+	bool	operator<(reverseIterator<Iterator1> const& it1, reverseIterator<Iterator2> const& it2)
+	{
+		return (it2.base() < it1.base());
+	}
+
+	template<typename Iterator1, typename Iterator2>
+	bool	operator<=(reverseIterator<Iterator1> const& it1, reverseIterator<Iterator2> const& it2)
+	{
+		return (!(it2 < it1));
+	}
+
+	template<typename Iterator1, typename Iterator2>
+	bool	operator>(reverseIterator<Iterator1> const& it1, reverseIterator<Iterator2> const& it2)
+	{
+		return (it2 < it1);
+	}
+
+	template<typename Iterator1, typename Iterator2>
+	bool	operator>=(reverseIterator<Iterator1> const& it1, reverseIterator<Iterator2> const& it2)
+	{
+		return (!(it1 < it2));
+	}
+
         template <class Iter>
         typename reverseIterator<Iter>::difference_type
         operator-(const reverseIterator<Iter>& x, const reverseIterator<Iter>& y) {
@@ -139,11 +145,7 @@ namespace ft
     {   
         return (iter + n);
     }
-        template<class IteratorL, class IteratorR>
-        bool operator!=(const reverseIterator<IteratorL>& lhs, const reverseIterator<IteratorR>& rhs)
-        {
-            return lhs.base() != rhs.base();
-        }
+
 }	
 
 #endif

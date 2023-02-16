@@ -91,6 +91,8 @@
         "map": "cpp",
         "set": "cpp",
         "unordered_set": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "future": "cpp",
+        "fstream": "cpp"
     }
 }

@@ -1,12 +1,118 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   temmp                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/16 12:08:55 by rimney            #+#    #+#             */
+/*   Updated: 2023/02/16 04:23:59 by rimney           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef REVERSEITERETOR_HPP
+#define REVERSEITERETOR_HPP
+#include <iterator>
+#include "iterators.hpp"
+#include "iterator_traits.hpp"
+
+namespace ft
+{
+    template <class T>
+    class reverseIterator : ft::Iterator<typename T::value_type>
+    {
+       public :
+            typedef typename ft::IteratorTraits<T>::difference_type difference_type;
+            typedef typename ft::IteratorTraits<T>::value_type value_type;
+            typedef typename ft::IteratorTraits<T>::iterator_category iterator_category;
+            typedef typename ft::IteratorTraits<T>::pointer pointer;
+            typedef typename ft::IteratorTraits<T>::reference reference;
+        private :
+            T i;
+        public :
+            reverseIterator() : i(nullptr) {}
+            explicit reverseIterator(T p) : i(p) {}
+            operator reverseIterator<const T>   () 
+            {
+                return reverseIterator<const T> (i);
+            }
+            ~reverseIterator();
+	template <class Iter>
+		reverseIterator(const reverseIterator<Iter> &other): i(other.base()) {};
+            T base() const
+            {
+                return (this->i);
+            }
+            reference  & operator*() const
+            {
+                T tmp = this->i;
+                tmp -= 1;
+                return (*tmp);
+            }
+            pointer operator->() const
+            {
+               return &(operator*());
+            }
+            reverseIterator operator-(difference_type const & n) const {
+                return reverseIterator(this->i + n);
+            }          
+            reverseIterator operator+(difference_type const & n) const {
+                return reverseIterator(this->i - n);
+            }
+
+            reverseIterator & operator++()
+            {
+                this->i -= 1;
+                return (*this);
+            }
+            reverseIterator & operator--()
+            {
+                this->i += 1;
+                return (*this);
+            }
+            reverseIterator operator++(int)
+            {
+                reverseIterator temp = *this;
+                this->i -= 1;
+                return (temp);
+            }
+            reverseIterator operator--(int)
+            {
+                reverseIterator temp = *this;
+                this->i += 1;
+                return (temp);
+            }
+            reverseIterator & operator+=(difference_type n)
+            {
+                this->i -= n;
+                return (*this);
+            }
+            reverseIterator & operator-=(difference_type n)
+            {
+                this->i += n;
+                return (*this);
+            }
+            reference & operator[](difference_type n) const
+            {
+                return *(*this + n);
+            }
+            
+   };
+
+
+#endif
+
+
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   randomAccessIterator.hpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 13:02:44 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/16 04:34:28 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/16 04:13:56 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +162,10 @@ namespace ft
             {
                 return (this->_pointer);
             }
-        randomAccessIterator operator+(difference_type const & n) const {
+        randomAccessIterator operator+(difference_type n) const {
             return randomAccessIterator(this->_pointer + n);
         }
-        randomAccessIterator operator-(difference_type const & n)  const {
+        randomAccessIterator operator-(difference_type n)  const {
             return randomAccessIterator(this->_pointer - n);
         }
 
@@ -107,7 +213,7 @@ namespace ft
                 
             }
 
-            difference_type operator-(randomAccessIterator  & diff) const      
+            difference_type operator-(randomAccessIterator diff) const      
             {
                 difference_type i = std::distance(diff._pointer, this->_pointer);
                 return i;

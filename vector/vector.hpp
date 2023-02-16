@@ -6,7 +6,7 @@
 /*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/13 06:16:27 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/16 03:18:27 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,7 +338,15 @@ namespace ft
                 _size -= 1;
                 return (pos);
             }
-
+            iterator erase(iterator first, iterator last)
+            {
+                size_type distance = last - first;
+                for(size_type i = 0; last + i < this->end(); i++)
+                    *(first + i) = *(last + i);
+                for(size_type i = 0; i < distance; i++)
+                    this->pop_back(); // gotta get rid of this
+                return (first);
+            }
 		    void push_back(const value_type & value)
             {
 			    if (this->_size == this->_capacity)
@@ -417,7 +425,7 @@ namespace ft
         {
             if (V1[i] < V2[i])
                 return true;
-            else
+            else if(V1[i] > V2[i])
                 return false;
             i++;
         }
