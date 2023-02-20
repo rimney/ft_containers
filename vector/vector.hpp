@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rimney < rimney@student.1337.ma>           +#+  +:+       +#+        */
+/*   By: rimney <rimney@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 16:37:08 by rimney            #+#    #+#             */
-/*   Updated: 2023/02/16 03:18:27 by rimney           ###   ########.fr       */
+/*   Updated: 2023/02/20 23:09:29 by rimney           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -389,10 +389,10 @@ namespace ft
             
             void swap( vector & other )
             {
-                vector temp;
-                temp = *this;
-                *this = other;
-                other = temp;
+                std::swap(this->V, other.V);
+                std::swap(this->alloc, other.alloc);
+                std::swap(this->_capacity, other._capacity);
+                std::swap(this->_size, other._size);
             }
             
             
